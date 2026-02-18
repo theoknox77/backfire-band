@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0A0A0A">
+<title>BACKFIRE - Funk Metal from Florida</title>
+<meta name="description" content="Backfire is funk metal with teeth. Born in Florida, built on groove, and fueled by Arabic scales, heavy riffs, and horns that hit like a fist.">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --black: #0A0A0A;
+  --dark: #111111;
+  --dark2: #161616;
+  --orange: #F97316;
+  --red: #EF4444;
+  --gold: #D4A574;
+  --white: #F0E8E0;
+  --gray: #888;
+  --dim: rgba(240,232,224,0.6);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Grain overlay */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; width: 100%;
+  z-index: 1000;
+  background: rgba(10,10,10,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(249,115,22,0.1);
+  padding: 0 2rem;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.3s;
+}
+
+nav.scrolled { background: rgba(10,10,10,0.95); }
+
+.nav-logo {
+  font-size: 1.3rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  color: var(--orange);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--dim);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--orange); }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+
+.hamburger span {
+  width: 24px;
+  height: 2px;
+  background: var(--white);
+  transition: all 0.3s;
+}
+
+.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+@media (max-width: 768px) {
+  .hamburger { display: flex; }
+  .nav-links {
+    position: fixed;
+    top: 60px; left: 0; width: 100%;
+    background: rgba(10,10,10,0.98);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 0;
+    gap: 1.5rem;
+    transform: translateY(-120%);
+    transition: transform 0.3s;
+  }
+  .nav-links.open { transform: translateY(0); }
+}
+
+/* SECTIONS */
+section {
+  padding: 7rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-title {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+/* HERO */
+#hero {
+  min-height: 100vh;
+  min-height: 100svh;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  opacity: 1;
+  transform: none;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 0;
+}
+
+.hero-bg {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: url('/images/hero-cropped.jpg') center center/cover no-repeat;
+  z-index: 0;
+}
+
+@media (max-width: 768px) {
+  #hero {
+    min-height: auto;
+    aspect-ratio: auto;
+    height: 100vh;
+    height: 100svh;
+  }
+  .hero-bg {
+    background-size: cover;
+    background-position: center center;
+  }
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(to bottom, transparent 0%, transparent 70%, rgba(10,10,10,0.7) 88%, rgba(10,10,10,1) 100%);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 2rem 3.5rem;
+}
+
+.band-name { display: none; }
+
+.tagline { display: none; }
+
+.hero-ctas {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cta {
+  display: inline-block;
+  padding: 0.9rem 2.5rem;
+  background: var(--orange);
+  color: var(--black);
+  font-weight: 900;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 2px solid var(--orange);
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.cta:hover {
+  background: transparent;
+  color: var(--orange);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(249,115,22,0.3);
+}
+
+.cta-ghost {
+  background: var(--black);
+  color: var(--white);
+  border-color: var(--black);
+}
+
+.cta-ghost:hover {
+  background: var(--black);
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 1.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  animation: bounce 2s infinite;
+  color: rgba(240,232,224,0.4);
+  font-size: 1.2rem;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+/* ABOUT */
+#about {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-content {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  text-align: left;
+}
+
+.about-image {
+  width: 280px;
+  height: 280px;
+  border-radius: 4px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid rgba(249,115,22,0.2);
+}
+
+.bio {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--white);
+  line-height: 1.9;
+}
+
+.bio-highlight {
+  color: var(--orange);
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .about-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+  }
+  .about-image {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+/* DIVIDER IMAGE */
+.divider-image {
+  width: 100%;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.divider-image img {
+  width: 100%;
+  max-width: 600px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* MUSIC */
+#music { width: 100%; max-width: 1000px; margin: 0 auto; }
+
+.albums {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .albums { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+}
+
+.album-card {
+  background: var(--dark2);
+  border: 1px solid rgba(249,115,22,0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.album-card:hover {
+  border-color: var(--orange);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(249,115,22,0.15);
+}
+
+.album-art {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+}
+
+.album-info { padding: 1.5rem; }
+
+.album-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--red);
+  color: var(--white);
+  font-size: 0.65rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  padding: 0.35rem 0.8rem;
+  text-transform: uppercase;
+  border-radius: 2px;
+  z-index: 2;
+}
+
+.album-title {
+  font-size: 1.4rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 0.2rem;
+}
+
+.album-subtitle {
+  font-size: 0.8rem;
+  color: var(--gold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+}
+
+.tracklist {
+  list-style: none;
+  margin-bottom: 1.5rem;
+}
+
+.tracklist li {
+  padding: 0.35rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 0.85rem;
+  color: var(--dim);
+  display: flex;
+  gap: 0.75rem;
+  transition: color 0.2s;
+}
+
+.tracklist li:hover { color: var(--white); }
+
+.tracklist li:last-child { border-bottom: none; }
+
+.track-num {
+  color: var(--orange);
+  font-weight: 700;
+  min-width: 1.5rem;
+  font-size: 0.75rem;
+}
+
+.album-btn {
+  display: inline-block;
+  padding: 0.65rem 1.8rem;
+  border: 2px solid var(--orange);
+  color: var(--orange);
+  font-weight: 900;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.25s;
+  border-radius: 2px;
+}
+
+.album-btn:hover {
+  background: var(--orange);
+  color: var(--black);
+  box-shadow: 0 4px 20px rgba(249,115,22,0.3);
+}
+
+/* CONNECT */
+#connect { width: 100%; max-width: 800px; margin: 0 auto; }
+
+.social-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1rem 1.2rem;
+  background: var(--dark2);
+  border: 1px solid rgba(249,115,22,0.1);
+  border-radius: 4px;
+  color: var(--dim);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.25s;
+}
+
+.social-link:hover {
+  border-color: var(--orange);
+  background: rgba(249,115,22,0.06);
+  color: var(--orange);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(249,115,22,0.1);
+}
+
+.social-icon { font-size: 1.1rem; }
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 4rem 2rem 3rem;
+  border-top: 1px solid rgba(249,115,22,0.08);
+  background: var(--dark);
+}
+
+.footer-logo {
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  color: var(--orange);
+  margin-bottom: 0.4rem;
+}
+
+.footer-tag {
+  font-size: 0.75rem;
+  color: var(--gold);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.footer-copy {
+  font-size: 0.7rem;
+  color: var(--gray);
+  letter-spacing: 0.05em;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-logo">BACKFIRE</a>
+  <button class="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#music">Music</a></li>
+    <li><a href="#connect">Connect</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-ctas">
+      <a href="#music" class="cta">Listen Now</a>
+      <a href="#connect" class="cta cta-ghost">Follow</a>
+    </div>
+  </div>
+  <div class="scroll-hint">&#8595;</div>
+</section>
+
+<section id="about">
+  <h2 class="section-title">About</h2>
+  <div class="about-content">
+    <img src="/images/profile.jpg" alt="Backfire" class="about-image">
+    <p class="bio">
+      Backfire is <span class="bio-highlight">funk metal with teeth</span>. Born in Florida, built on groove, and fueled by Arabic scales, heavy riffs, and horns that hit like a fist.
+      <br><br>
+      Two albums deep and just getting started. If you like your grooves heavy and your horns loud, you're in the right place.
+    </p>
+  </div>
+</section>
+
+<!-- divider removed -->
+
+<section id="music">
+  <h2 class="section-title">Music</h2>
+  <div class="albums">
+    <div class="album-card">
+      <img src="/images/album-backfire.jpg" alt="Backfire debut album cover" class="album-art">
+      <div class="album-info">
+        <h3 class="album-title">Backfire</h3>
+        <p class="album-subtitle">Debut Album</p>
+        <ol class="tracklist">
+          <li><span class="track-num">01</span> BackFire</li>
+          <li><span class="track-num">02</span> Bringin' The Groove</li>
+          <li><span class="track-num">03</span> Humble Pie</li>
+          <li><span class="track-num">04</span> Soul Untied</li>
+          <li><span class="track-num">05</span> Earth in Peace</li>
+          <li><span class="track-num">06</span> Forgive Me Father</li>
+          <li><span class="track-num">07</span> Family</li>
+          <li><span class="track-num">08</span> Kill Your TV</li>
+        </ol>
+        <a href="https://open.spotify.com/artist/6mk1vb4nmFxMewfydGw8iN" target="_blank" rel="noopener" class="album-btn">Listen</a>
+      </div>
+    </div>
+    <div class="album-card">
+      <div class="album-badge">Coming March 1</div>
+      <img src="/images/album-sweet-revenge.jpg" alt="Sweet Revenge album cover" class="album-art">
+      <div class="album-info">
+        <h3 class="album-title">Sweet Revenge</h3>
+        <p class="album-subtitle">New Album 2026</p>
+        <ol class="tracklist">
+          <li><span class="track-num">01</span> Sweet Revenge</li>
+          <li><span class="track-num">02</span> Hope</li>
+          <li><span class="track-num">03</span> Tomorrow Is a New Day</li>
+          <li><span class="track-num">04</span> Brand New Love</li>
+          <li><span class="track-num">05</span> Heaven's Gate</li>
+          <li><span class="track-num">06</span> HELP!</li>
+          <li><span class="track-num">07</span> Until I Die</li>
+        </ol>
+        <a href="https://open.spotify.com/artist/6mk1vb4nmFxMewfydGw8iN" target="_blank" rel="noopener" class="album-btn">Pre-Save</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="connect">
+  <h2 class="section-title">Connect</h2>
+  <div class="social-grid">
+    <a href="https://instagram.com/backfiretheband" target="_blank" rel="noopener" class="social-link"><span class="social-icon">&#128247;</span> Instagram</a>
+    <a href="https://tiktok.com/@BackFireBand" target="_blank" rel="noopener" class="social-link"><span class="social-icon">&#127925;</span> TikTok</a>
+    <a href="https://x.com/backfiretheband" target="_blank" rel="noopener" class="social-link"><span class="social-icon">&#128172;</span> Twitter / X</a>
+    <a href="https://reddit.com/user/BackfireBand" target="_blank" rel="noopener" class="social-link"><span class="social-icon">&#128640;</span> Reddit</a>
+    <a href="https://soundcloud.com/backfire-backfire" target="_blank" rel="noopener" class="social-link"><span class="social-icon">&#9729;&#65039;</span> SoundCloud</a>
+    <a href="https://open.spotify.com/artist/6mk1vb4nmFxMewfydGw8iN" target="_blank" rel="noopener" class="social-link"><span class="social-icon">&#127911;</span> Spotify</a>
+    <a href="https://backfire2.bandcamp.com" target="_blank" rel="noopener" class="social-link"><span class="social-icon">&#127926;</span> Bandcamp</a>
+<!-- linktree removed -->
+    <a href="mailto:TheoKnox77@gmail.com" class="social-link"><span class="social-icon">&#9993;&#65039;</span> Email</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">BACKFIRE</div>
+  <div class="footer-tag">Funk Metal from Florida</div>
+  <div class="footer-copy">&copy; 2026 Backfire. All rights reserved.</div>
+</footer>
+
+<script>
+// Nav scroll effect
+window.addEventListener('scroll', () => {
+  document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Hamburger
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('active');
+  navLinks.classList.toggle('open');
+});
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  hamburger.classList.remove('active');
+  navLinks.classList.remove('open');
+}));
+
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('section:not(#hero), .divider-image').forEach(s => observer.observe(s));
+
+// Hide scroll hint after scrolling
+window.addEventListener('scroll', () => {
+  const hint = document.querySelector('.scroll-hint');
+  if (hint && window.scrollY > 100) hint.style.opacity = '0';
+}, { passive: true });
+</script>
+</body>
+</html>
