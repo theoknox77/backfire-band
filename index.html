@@ -1,6 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-38J8CVSGSZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-38J8CVSGSZ', {
+    page_title: document.title,
+    page_location: window.location.href
+  });
+  
+  // Custom event tracking for Backfire
+  function trackSpotifyClick(link) {
+    gtag('event', 'spotify_click', {
+      event_category: 'music_engagement',
+      event_label: link,
+      value: 1
+    });
+  }
+  
+  function trackSocialClick(platform, link) {
+    gtag('event', 'social_click', {
+      event_category: 'social_engagement',
+      event_label: platform,
+      platform: platform,
+      value: 1
+    });
+  }
+  
+  function trackMusicPlay(track) {
+    gtag('event', 'music_play', {
+      event_category: 'music_engagement',
+      event_label: track,
+      value: 1
+    });
+  }
+</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -623,7 +661,7 @@ footer {
           <li><span class="track-num">07</span> Family</li>
           <li><span class="track-num">08</span> Kill Your TV</li>
         </ol>
-        <a href="https://open.spotify.com/artist/6mk1vb4nmFxMewfydGw8iN" target="_blank" rel="noopener" class="album-btn">Listen</a>
+        <a href="https://open.spotify.com/artist/6mk1vb4nmFxMewfydGw8iN" target="_blank" rel="noopener" class="album-btn" onclick="trackSpotifyClick('album_listen')">Listen</a>
       </div>
     </div>
     <div class="album-card">
@@ -641,7 +679,7 @@ footer {
           <li><span class="track-num">06</span> HELP!</li>
           <li><span class="track-num">07</span> Until I Die</li>
         </ol>
-        <a href="https://open.spotify.com/artist/6mk1vb4nmFxMewfydGw8iN" target="_blank" rel="noopener" class="album-btn">Pre-Save</a>
+        <a href="https://open.spotify.com/artist/6mk1vb4nmFxMewfydGw8iN" target="_blank" rel="noopener" class="album-btn" onclick="trackSpotifyClick('album_presave')">Pre-Save</a>
       </div>
     </div>
   </div>
@@ -650,15 +688,15 @@ footer {
 <section id="connect">
   <h2 class="section-title">Connect</h2>
   <div class="social-grid">
-    <a href="https://instagram.com/backfiretheband" target="_blank" rel="noopener" class="social-link"><span class="social-icon">&#128247;</span> Instagram</a>
-    <a href="https://tiktok.com/@BackFireBand" target="_blank" rel="noopener" class="social-link"><span class="social-icon">&#127925;</span> TikTok</a>
-    <a href="https://x.com/backfiretheband" target="_blank" rel="noopener" class="social-link"><span class="social-icon">&#128172;</span> Twitter / X</a>
-    <a href="https://reddit.com/user/BackfireBand" target="_blank" rel="noopener" class="social-link"><span class="social-icon">&#128640;</span> Reddit</a>
-    <a href="https://soundcloud.com/backfire-backfire" target="_blank" rel="noopener" class="social-link"><span class="social-icon">&#9729;&#65039;</span> SoundCloud</a>
-    <a href="https://open.spotify.com/artist/6mk1vb4nmFxMewfydGw8iN" target="_blank" rel="noopener" class="social-link"><span class="social-icon">&#127911;</span> Spotify</a>
-    <a href="https://backfire2.bandcamp.com" target="_blank" rel="noopener" class="social-link"><span class="social-icon">&#127926;</span> Bandcamp</a>
+    <a href="https://instagram.com/backfiretheband" target="_blank" rel="noopener" class="social-link" onclick="trackSocialClick('instagram', this.href)"><span class="social-icon">&#128247;</span> Instagram</a>
+    <a href="https://tiktok.com/@BackFireBand" target="_blank" rel="noopener" class="social-link" onclick="trackSocialClick('tiktok', this.href)"><span class="social-icon">&#127925;</span> TikTok</a>
+    <a href="https://x.com/backfiretheband" target="_blank" rel="noopener" class="social-link" onclick="trackSocialClick('twitter', this.href)"><span class="social-icon">&#128172;</span> Twitter / X</a>
+    <a href="https://reddit.com/user/BackfireBand" target="_blank" rel="noopener" class="social-link" onclick="trackSocialClick('reddit', this.href)"><span class="social-icon">&#128640;</span> Reddit</a>
+    <a href="https://soundcloud.com/backfire-backfire" target="_blank" rel="noopener" class="social-link" onclick="trackSocialClick('soundcloud', this.href)"><span class="social-icon">&#9729;&#65039;</span> SoundCloud</a>
+    <a href="https://open.spotify.com/artist/6mk1vb4nmFxMewfydGw8iN" target="_blank" rel="noopener" class="social-link" onclick="trackSpotifyClick('social_spotify')"><span class="social-icon">&#127911;</span> Spotify</a>
+    <a href="https://backfire2.bandcamp.com" target="_blank" rel="noopener" class="social-link" onclick="trackSocialClick('bandcamp', this.href)"><span class="social-icon">&#127926;</span> Bandcamp</a>
 <!-- linktree removed -->
-    <a href="mailto:timpalladino@me.com?subject=Backfire%20Inquiry" class="social-link"><span class="social-icon">✉️</span> Email</a>
+    <a href="mailto:timpalladino@me.com?subject=Backfire%20Inquiry" class="social-link" onclick="trackSocialClick('email', this.href)"><span class="social-icon">✉️</span> Email</a>
   </div>
 </section>
 
